@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Red Light Raga</title>
+  <meta name="description" content="A 90-second red light that sings. Clap, hum or tap with the tabla and a kolam draws itself. Concept demo for DJXHack: Everyday Magic." />
+  <meta name="theme-color" content="#09090f" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2309090f'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%239af0bc' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='2.4' fill='%239af0bc'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <canvas id="stage" aria-label="A kolam that draws itself as people clap in time"></canvas>
+
+  <header class="top" id="hud-top" hidden>
+    <div class="brand"><span>Red Light Raga</span><i lang="hi">रेड लाइट राग</i></div>
+    <div class="signal" id="signal" data-state="red" role="timer" aria-live="off">
+      <span class="lamp"></span>
+      <span class="clock" id="clock">1:30</span>
+      <span class="cycle" id="cycle">Cycle 1 of 8</span>
+    </div>
+    <div class="raga" id="ragachip"><b id="ragaName">Yaman</b><em id="ragaWhen">Evening</em></div>
+  </header>
+
+  <div class="center" id="center" hidden>
+    <div class="bol" id="bol" aria-hidden="true">Dha</div>
+    <p class="coach" id="coach" aria-live="polite"></p>
+  </div>
+
+  <footer class="bottom" id="hud-bottom" hidden>
+    <div class="layers" id="layers">
+      <div class="layer on" data-k="tanpura"><span>Tanpura</span><i><u></u></i></div>
+      <div class="layer" data-k="tabla"><span>Tabla</span><i><u></u></i></div>
+      <div class="layer" data-k="sitar"><span>Sitar</span><i><u></u></i></div>
+      <div class="layer" data-k="ensemble"><span>Ensemble</span><i><u></u></i></div>
+    </div>
+    <div class="meters">
+      <div class="stat"><span>In time</span><b id="mSync">0%</b></div>
+      <div class="stat"><span>Kolam</span><b id="mKolam">0%</b></div>
+      <div class="stat"><span>Empty beats held</span><b id="mKhali">0</b></div>
+      <div class="mic" id="micMeter" hidden><span>Mic</span><i><u id="micBar"></u></i></div>
+      <button class="ghost" id="mute" type="button" aria-pressed="false">Sound on</button>
+    </div>
+    <p class="tag" id="modeTag"></p>
+  </footer>
+
+  <section class="overlay" id="intro">
+    <div class="panel">
+      <p class="eyebrow">DJXHack · Everyday Magic</p>
+      <h1>Red Light <span>Raga</span></h1>
+      <p class="script" lang="hi">रेड लाइट राग</p>
+      <p class="lede">The 90 second red light, turned into a duet between strangers. Clap, hum or tap with the tabla and a kolam draws itself. The raga only blooms when you are in time together.</p>
+
+      <ol class="steps">
+        <li><b>01</b><span>Clap, tap or hum on the beat. Each hit becomes a swara and one more stroke of the kolam.</span></li>
+        <li><b>02</b><span>Beat 9 is <em>khali</em>, the empty beat. Stay quiet together and the music grows a layer.</span></li>
+        <li><b>03</b><span>When the light turns green, the kolam holds whatever you built.</span></li>
+      </ol>
+
+      <fieldset class="choices" id="modeChoice">
+        <legend>How will you join in?</legend>
+        <label><input type="radio" name="mode" value="mic" checked /><span><b>Microphone</b><small>Claps and hums</small></span></label>
+        <label><input type="radio" name="mode" value="tap" /><span><b>Tap</b><small>Click, touch or Space</small></span></label>
+        <label><input type="radio" name="mode" value="crowd" /><span><b>Watch</b><small>Simulated crowd</small></span></label>
+      </fieldset>
+
+      <div class="row">
+        <label class="sel">Raga
+          <select id="ragaSel">
+            <option value="auto">Auto, by time of day</option>
+            <option value="yaman">Yaman (evening)</option>
+            <option value="bhairavi">Bhairavi (morning)</option>
+          </select>
+        </label>
+        <label class="chk"><input type="checkbox" id="phones" /><span>I am wearing headphones</span></label>
+      </div>
+
+      <button class="go" id="begin" type="button">Begin the wait</button>
+      <p class="fine">A concept prototype by Anisha Gupta. Every sound is synthesised in your browser and the microphone never leaves your device. Without headphones, keep the volume low so the mic does not hear the tabla.</p>
+      <p class="err" id="err" role="alert" hidden></p>
+    </div>
+  </section>
+
+  <section class="overlay done" id="outro" hidden>
+    <div class="panel slim">
+      <p class="eyebrow" id="oEyebrow">Green</p>
+      <h2>Chalo.</h2>
+      <p class="lede" id="oLine"></p>
+      <dl class="results">
+        <div><dt>In time</dt><dd id="oSync">0%</dd></div>
+        <div><dt>Notes played</dt><dd id="oNotes">0</dd></div>
+        <div><dt>Empty beats held</dt><dd id="oKhali">0</dd></div>
+        <div><dt>Kolam drawn</dt><dd id="oKolam">0%</dd></div>
+      </dl>
+      <div class="row end">
+        <button class="go" id="again" type="button">Wait again</button>
+        <button class="ghost" id="seeKolam" type="button">See the kolam</button>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
