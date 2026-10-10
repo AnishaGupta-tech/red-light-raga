@@ -309,7 +309,7 @@ function frame() {
     const left = Math.max(0, Math.ceil(TOTAL - t));
     $('clock').textContent = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
     $('mSync').textContent = `${Math.round(st.sync * 100)}%`;
-    $('mKolam').textContent = `${Math.round(((st.revealed + Math.min(1, st.progress)) / stage.groupCount) * 100)}%`;
+    $('mKolam').textContent = `${Math.min(100, Math.round(((st.revealed + Math.min(1, st.progress)) / stage.groupCount) * 100))}%`;
     $('mKhali').textContent = `${st.khaliKept}/${st.khaliTotal}`;
     if (mic) $('micBar').style.width = `${Math.min(100, mic.level * 900)}%`;
 
@@ -350,6 +350,8 @@ function finish(now) {
       st.notes === 0 ? 'The tanpura waited, but nobody joined. Next time, try a clap on the first beat.' :
       'The raga is still shy. Try clapping on beats 1, 5 and 13, and keep quiet on beat 9.';
     $('outro').hidden = false;
+    $('center').hidden = true;
+    $('hud-bottom').hidden = true;
     audio.stop();
   }, 2400);
 }
@@ -357,12 +359,22 @@ function finish(now) {
 $('begin').addEventListener('click', begin);
 $('again').addEventListener('click', () => {
   $('outro').hidden = true;
+  $('again2').hidden = true;
   for (const id of ['hud-top', 'hud-bottom', 'center']) $(id).hidden = true;
   st.running = false;
   stage.reset();
   $('intro').hidden = false;
 });
-$('seeKolam').addEventListener('click', () => ($('outro').hidden = true));
+$('seeKolam').addEventListener('click', () => {
+  $('outro').hidden = true;
+  $('center').hidden = false;
+  $('hud-bottom').hidden = false;
+  $('again2').hidden = false;
+});
+$('again2').addEventListener('click', () => {
+  $('again2').hidden = true;
+  $('again').click();
+});
 $('mute').addEventListener('click', (e) => {
   const m = e.currentTarget.getAttribute('aria-pressed') !== 'true';
   e.currentTarget.setAttribute('aria-pressed', String(m));

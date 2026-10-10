@@ -83,9 +83,9 @@ export class Stage {
     this.w = w;
     this.h = h;
     const top = w < 700 ? 96 : 84;
-    const bottom = w < 700 ? 290 : 235;
+    const bottom = w < 700 ? 270 : 235;
     const availH = h - top - bottom;
-    const S = Math.max(160, Math.min((availH - 52) / 1.4, (w - 28) / 1.4));
+    const S = Math.max(160, Math.min((availH - 52) / 1.4, (w - 84) / 1.4));
     this.S = S;
     this.cell = S / N;
     this.cx = w / 2;

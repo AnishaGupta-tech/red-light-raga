@@ -104,13 +104,16 @@ button { font: inherit; cursor: pointer; }
   background: radial-gradient(ellipse at 50% 40%, rgba(9, 9, 15, 0.55), rgba(9, 9, 15, 0.9) 75%);
   overflow-y: auto;
 }
-.overlay.done { background: radial-gradient(ellipse at 50% 60%, rgba(9, 9, 15, 0.1), rgba(9, 9, 15, 0.82) 80%); align-items: end; }
+.overlay.done { background: linear-gradient(0deg, rgba(9, 9, 15, 0.96) 0%, rgba(9, 9, 15, 0.9) 34%, rgba(9, 9, 15, 0) 62%); align-items: end; padding-bottom: 3vh; }
 .panel { width: min(640px, 100%); display: flex; flex-direction: column; gap: 18px; padding: 8px 0; }
-.panel.slim { width: min(520px, 100%); margin-bottom: 4vh; }
+.panel.slim { width: min(900px, 100%); display: grid; grid-template-columns: 1fr auto; column-gap: 40px; row-gap: 10px; align-items: end; }
+.panel.slim .eyebrow, .panel.slim h2, .panel.slim .lede { grid-column: 1; }
+.panel.slim .results { grid-column: 2; grid-row: 1 / 4; border-top: 0; border-left: 1px solid var(--line); padding: 0 0 0 28px; grid-template-columns: repeat(2, auto); gap: 14px 30px; }
+.panel.slim .row { grid-column: 1 / -1; }
 .eyebrow { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--mint); }
 h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(54px, 9vw, 92px); line-height: 0.95; letter-spacing: -0.01em; }
 h1 span { font-style: italic; color: var(--mint); }
-h2 { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: clamp(56px, 9vw, 88px); line-height: 1; }
+h2 { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: clamp(48px, 7vw, 72px); line-height: 1; }
 .script { font-family: 'Noto Serif Devanagari', serif; font-size: 18px; color: var(--mist); margin-top: -8px; }
 .lede { font-size: 17px; line-height: 1.55; color: #e7dfe9; max-width: 56ch; }
 .steps { list-style: none; display: grid; gap: 0; border-top: 1px solid var(--line); }
@@ -159,6 +162,8 @@ select { background: var(--ink-2); color: var(--paper); border: 1px solid var(--
   .center { bottom: 172px; }
   .choices { grid-template-columns: 1fr; }
   .results { grid-template-columns: repeat(2, 1fr); }
+  .panel.slim { grid-template-columns: 1fr; }
+  .panel.slim .results { grid-column: 1; grid-row: auto; border-left: 0; border-top: 1px solid var(--line); padding: 14px 0 0; }
   .bottom { padding-inline: 14px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
