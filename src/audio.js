@@ -35,9 +35,10 @@ export class Audio {
     this.master = new Tone.Gain(0.9);
     const comp = new Tone.Compressor(-18, 3);
     const limiter = new Tone.Limiter(-2);
+    const warm = new Tone.Filter(6800, 'lowpass');
     this.reverb = new Tone.Reverb({ decay: 3.6, wet: 0.28 });
     await this.reverb.generate();
-    this.master.chain(comp, limiter, Tone.getDestination());
+    this.master.chain(warm, comp, limiter, Tone.getDestination());
     this.bus = new Tone.Gain(1).connect(this.reverb);
     this.reverb.connect(this.master);
     this.dry = new Tone.Gain(0.85).connect(this.master);

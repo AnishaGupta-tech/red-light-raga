@@ -167,3 +167,26 @@ select { background: var(--ink-2); color: var(--paper); border: 1px solid var(--
   .bottom { padding-inline: 14px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* larger HUD when the page is rendered as a 1080p video frame (?video=1) */
+html.video .top { padding: 26px 44px; }
+html.video .brand span { font-size: 34px; }
+html.video .brand i { font-size: 18px; }
+html.video .signal { padding: 12px 30px 12px 24px; gap: 18px; }
+html.video .lamp { width: 20px; height: 20px; }
+html.video .clock { font-size: 38px; }
+html.video .cycle { font-size: 15px; }
+html.video .raga b { font-size: 34px; }
+html.video .raga em { font-size: 15px; }
+html.video .bol { font-size: 76px; }
+html.video .coach { font-size: 24px; margin-top: 12px; }
+html.video .center { bottom: 196px; }
+html.video .bottom { padding: 14px 44px 38px; gap: 20px; }
+html.video .layers { max-width: 1000px; gap: 28px; }
+html.video .layer span { font-size: 15px; }
+html.video .layer i { height: 5px; }
+html.video .stat span, html.video .mic span { font-size: 16px; }
+html.video .stat b { font-size: 30px; }
+html.video .meters { gap: 10px 48px; }
+html.video #mute, html.video .tag { display: none; }
+html.video *, html.video *::before, html.video *::after { transition: none !important; animation: none !important; }

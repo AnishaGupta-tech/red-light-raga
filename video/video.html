@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Red Light Raga — concept video compositor</title>
+<link rel="stylesheet" href="./video.css">
+</head>
+<body>
+<div id="root">
+  <div class="bg"></div>
+  <div class="dots" id="dots"></div>
+
+  <!-- 1 · hook -->
+  <section class="scene" id="s1">
+    <div class="lamp" id="lamp1"><i></i></div>
+    <div class="clock1" id="clock1">1:30</div>
+    <div class="hook">
+      <div class="h" id="h1"></div>
+      <div class="h" id="h2"></div>
+      <div class="h it" id="h3"></div>
+    </div>
+  </section>
+
+  <!-- 2 · problem and flip -->
+  <section class="scene" id="s2">
+    <div class="pa" id="pa">
+      <div class="eyebrow">Mumbai Traffic Police · Punishing Signal · 2020 pilot</div>
+      <div class="big"><span id="db">0</span><small>dB</small></div>
+      <div class="arrowline"><b>Honk past 85 dB</b><i></i><b>and the red light resets to 90 seconds.</b></div>
+      <div class="honkmore">Honk more, wait more.</div>
+    </div>
+    <div class="clockbox" id="clockbox"><div class="lamp small" id="lamp2"><i></i></div><div class="clk" id="clk2">0:41</div></div>
+    <div class="pb" id="pb">
+      <div class="eyebrow mint">So we flipped it</div>
+      <div class="flip" id="flip1">Don’t punish the wait.</div>
+      <div class="flip it" id="flip2">Let the wait play.</div>
+    </div>
+  </section>
+
+  <!-- 3 · title -->
+  <section class="scene" id="s3">
+    <canvas id="titleCanvas" width="1920" height="1080"></canvas>
+    <div class="title">
+      <div class="eyebrow mint" id="t0">DJXHack · Everyday Magic</div>
+      <div class="t1" id="t1">Red Light</div>
+      <div class="t1 it" id="t2">Raga</div>
+      <div class="deva" id="t3">रेड लाइट राग</div>
+      <div class="tag" id="t4">The 90-second wait that sings.</div>
+      <div class="by" id="t5">A concept by Anisha Gupta</div>
+    </div>
+  </section>
+
+  <!-- 4 · demo -->
+  <div id="demoWrap">
+    <iframe id="demo" src="/index.html?video=1" width="1920" height="1080" title="demo"></iframe>
+  </div>
+  <svg id="lines" viewBox="0 0 1920 1080" width="1920" height="1080"></svg>
+  <div id="cards"></div>
+  <div id="clapw"><svg viewBox="-110 -110 220 220" width="150" height="150" id="hits"></svg><div class="cl"><b>Claps and hums</b><span>from a simulated crowd</span></div></div>
+  <div id="holdword">HOLD THE SILENCE</div>
+  <div id="jump"><div class="jc" id="jc1"></div><div class="jc2" id="jc2"></div></div>
+
+  <!-- 5 · why -->
+  <section class="scene" id="s5">
+    <div class="eyebrow mint" id="w0">Why it works</div>
+    <div class="why" id="w1">Nobody is punished.</div>
+    <div class="why it" id="w2">Everybody is in the music.</div>
+    <div class="trio">
+      <div class="pc" id="pc1"><b>1</b><h4>Reward togetherness, not noise</h4><p>Off-beat hits only make a soft ripple. The music grows when people fall into time.</p></div>
+      <div class="pc" id="pc2"><b>2</b><h4>Rooted in everyday India</h4><p>Raga time theory, the 16-beat Teentaal and the kolam on the doorstep, not decoration.</p></div>
+      <div class="pc" id="pc3"><b>3</b><h4>Silence is part of the music</h4><p>Khali, the empty beat, turns being quiet together into something you do on purpose.</p></div>
+    </div>
+  </section>
+
+  <!-- 6 · street concept -->
+  <section class="scene" id="s6">
+    <div class="eyebrow mint" id="x0">On the street</div>
+    <div class="x1" id="x1">A permissioned pilot at a busy crossing.</div>
+    <svg id="street" viewBox="0 0 300 168" width="1260" height="705" xmlns="http://www.w3.org/2000/svg">
+      <rect id="road" y="136" width="300" height="32" fill="#17121e"/>
+      <line id="roadline" x1="0" y1="136" x2="300" y2="136" stroke="#38316b" stroke-width="1"/>
+      <rect id="roof" x="38" y="40" width="112" height="8" fill="#242133" stroke="#a9a5b4" stroke-width="1.2"/>
+      <path id="shelter" d="M38 136 V40 H150 V136" fill="none" stroke="#a9a5b4" stroke-width="1.2" pathLength="1"/>
+      <rect id="panel" x="62" y="58" width="64" height="64" rx="3" fill="#123523" stroke="#9af0bc" stroke-width="1"/>
+      <g id="kolam" fill="none" stroke="#9af0bc" stroke-width="1.6" stroke-linecap="round">
+        <circle id="k0" cx="94" cy="90" r="9" pathLength="1"/>
+        <path id="k1" d="M76 74a8 8 0 0 1 8 8" pathLength="1"/><path id="k2" d="M112 74a8 8 0 0 0-8 8" pathLength="1"/>
+        <path id="k3" d="M76 106a8 8 0 0 0 8-8" pathLength="1"/><path id="k4" d="M112 106a8 8 0 0 1-8-8" pathLength="1"/>
+        <circle id="k5" cx="94" cy="90" r="2" fill="#9af0bc"/>
+      </g>
+      <g id="projector"><rect x="140" y="26" width="16" height="9" rx="2" fill="#fff7fd"/></g>
+      <path id="beam" d="M142 35 L66 60 L122 60 Z" fill="rgba(154,240,188,.16)" stroke="rgba(154,240,188,.45)" stroke-width=".6"/>
+      <line id="micpole" x1="158" y1="50" x2="158" y2="136" stroke="#a9a5b4" stroke-width="1"/>
+      <circle id="mic" cx="158" cy="48" r="4.2" fill="#fff7fd"/>
+      <path id="mic1" d="M150 38a12 12 0 0 1 16 0" fill="none" stroke="#9af0bc" stroke-width="1"/>
+      <path id="mic2" d="M146 33a18 18 0 0 1 24 0" fill="none" stroke="rgba(154,240,188,.5)" stroke-width="1"/>
+      <g id="p1" fill="#fff7fd"><circle cx="86" cy="116" r="4"/><rect x="82" y="121" width="8" height="15" rx="3"/></g>
+      <g id="p2" fill="#fff7fd"><circle cx="110" cy="116" r="4"/><rect x="106" y="121" width="8" height="15" rx="3"/></g>
+      <g id="p3" fill="#fff7fd"><circle cx="132" cy="117" r="4"/><rect x="128" y="122" width="8" height="14" rx="3"/></g>
+      <g id="claps" fill="none" stroke="#9af0bc" stroke-width="1"><path id="c1" d="M92 108q4-6 8 0"/><path id="c2" d="M116 108q4-6 8 0"/></g>
+      <line id="pole" x1="236" y1="136" x2="236" y2="34" stroke="#a9a5b4" stroke-width="2"/>
+      <rect id="sig" x="226" y="34" width="20" height="38" rx="4" fill="#111019" stroke="#a9a5b4" stroke-width="1"/>
+      <circle id="lampR" cx="236" cy="45" r="5" fill="#d9534f"/><circle id="lampG" cx="236" cy="60" r="5" fill="#2a2634"/>
+      <text id="timer" x="236" y="86" text-anchor="middle" font-family="Hanken Grotesk Variable, sans-serif" font-size="8" fill="#fff7fd" font-weight="700" stroke="#0d0c14" stroke-width="3" paint-order="stroke">1:30</text>
+      <line id="dash" x1="176" y1="152" x2="296" y2="152" stroke="#38316b" stroke-dasharray="8 6" stroke-width="1.4"/>
+      <g id="labels" font-family="Hanken Grotesk Variable, sans-serif" font-size="6" fill="#a9a5b4" letter-spacing=".6">
+        <text id="lb1" x="142" y="22">PROJECTOR</text><text id="lb2" x="164" y="57">MIC</text><text id="lb3" x="64" y="55.6">KOLAM WALL</text><text id="lb4" x="192" y="30">SIGNAL TIMER</text><text id="lb5" x="40" y="150">WAITERS</text>
+      </g>
+    </svg>
+    <div class="kit" id="kit">
+      <div class="kr" id="kr1"><b>Kit</b><span>Weatherproof projector (about 4–6k lumens, to be confirmed on site), a directional mic or clap sensor, a mini-PC and a low-level speaker.</span></div>
+      <div class="kr" id="kr2"><b>Safe</b><span>No input from drivers, no horns. The wall faces the pavement, away from drivers’ sightlines.</span></div>
+      <div class="kr" id="kr3"><b>Rules</b><span>Permissioned pilot. Horn and loudspeaker rules apply, and speaker level stays at ambient.</span></div>
+    </div>
+  </section>
+
+  <!-- 7 · end -->
+  <section class="scene" id="s7">
+    <div class="e-l">
+      <div class="eyebrow mint" id="e0">DJXHack · Everyday Magic · 2026</div>
+      <div class="t1" id="e1">Red Light</div>
+      <div class="t1 it" id="e2">Raga</div>
+      <div class="tag" id="e3">The 90-second wait that sings.</div>
+      <div class="by" id="e4">Anisha Gupta</div>
+    </div>
+    <div class="e-r" id="e5">
+      <div class="qrbox"><img id="qrimg" src="./qr.svg" alt=""></div>
+      <div class="try">Try the live demo</div>
+      <div class="url">anishagupta-tech.github.io/red-light-raga</div>
+    </div>
+    <div class="legal" id="e6">The crowd and the street scene are illustrations. The demo runs live in your browser. All sound is synthesised, with no sampled audio. Built with AI assistance (Claude, Anthropic) under the author’s direction.</div>
+  </section>
+
+  <div id="badge"><i></i><span id="badgeText"></span></div>
+  <div id="fade"></div>
+</div>
+<script type="module" src="./video.js"></script>
+</body>
+</html>

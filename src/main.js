@@ -9,6 +9,27 @@ const TOTAL = TEENTAAL.cycleSeconds * 8; // 90 s
 
 const stage = new Stage($('stage'));
 const params = new URLSearchParams(location.search);
+// ?video=1 drives the demo on a virtual clock with no audio device, for rendering the concept video.
+const VIDEO = params.get('video') === '1';
+window.__vt = 0;
+if (VIDEO) document.documentElement.classList.add('video');
+const clockNow = () => (VIDEO ? window.__vt : performance.now() / 1000);
+if (VIDEO) window.__vlog = [];
+const vlog = (o) => VIDEO && window.__vlog.push(o);
+
+function stubAudio() {
+  const smooth = (x, a, b) => Math.min(1, Math.max(0, (x - a) / (b - a)));
+  return {
+    ready: true, layer: { tabla: 0, sitar: 0, ensemble: 0 }, t0: 0, ctx: { currentTime: 0 },
+    async init() {}, start() {}, stop() {}, setMuted() {}, outputLatency: () => 0, now: () => window.__vt,
+    pluck(f) { vlog({ k: 'pluck', t: window.__vt, f }); },
+    setLayers(sync) {
+      this.layer = { tabla: smooth(sync, 0.12, 0.3), sitar: smooth(sync, 0.42, 0.58), ensemble: smooth(sync, 0.7, 0.85) };
+      vlog({ k: 'layers', t: window.__vt, ...this.layer, sync });
+    },
+    resolve() { vlog({ k: 'resolve', t: window.__vt }); },
+  };
+}
 
 const st = {
   running: false,
@@ -71,7 +92,7 @@ async function begin() {
   $('begin').disabled = true;
   $('begin').textContent = 'Tuning the tanpura…';
   try {
-    audio = new Audio();
+    audio = VIDEO ? stubAudio() : new Audio();
     await audio.init(st.raga);
   } catch (e) {
     console.error(e);
@@ -81,7 +102,7 @@ async function begin() {
     return;
   }
 
-  if (st.mode === 'mic') {
+  if (st.mode === 'mic' && !VIDEO) {
     mic = new MicInput(audio.ctx, { headphones: $('phones').checked });
     try {
       await mic.start((ev) => onEvent(ev));
@@ -137,7 +158,7 @@ function onEvent(ev) {
   const score = (x) => (x < 0.075 ? 1 : x < 0.15 ? 0.75 : x < 0.23 ? 0.4 : 0);
   let qlt = Math.max(score(d), score(dh) * 0.5);
   const beatIdx = ((nearest % 16) + 16) % 16;
-  const now = performance.now() / 1000;
+  const now = clockNow();
 
   // note
   let note;
@@ -155,6 +176,7 @@ function onEvent(ev) {
     st.khaliHits++;
     qlt = 0;
   }
+  vlog({ k: khali ? 'khali-break' : qlt >= 0.4 ? 'hit' : 'off', t: ts, note: note.name, beat: beatIdx });
   st.activity.push(ts);
 
   if (qlt >= 0.4) {
@@ -233,12 +255,15 @@ function coach() {
 
 function frame() {
   requestAnimationFrame(frame);
-  const now = performance.now() / 1000;
+  render(performance.now() / 1000, true);
+}
+
+function render(now, draw) {
   const dt = Math.min(0.1, now - (st.lastFrame || now));
   st.lastFrame = now;
 
   if (!st.running) {
-    stage.draw({ now, t: 0, total: TOTAL, beatPos: 0, sync: 0.15, ghost: true, done: false });
+    if (draw) stage.draw({ now, t: 0, total: TOTAL, beatPos: 0, sync: 0.15, ghost: true, done: false });
     return;
   }
   const t = Math.max(0, audio.now());
@@ -282,6 +307,7 @@ function frame() {
         st.khaliTotal++;
         if (st.khaliHits === 0) {
           st.khaliKept++;
+          vlog({ k: 'khali-kept', t });
           st.sync = Math.min(1, st.sync + 0.08);
           stage.bloom(now);
           $('coach').textContent = 'Held. Listen to it open up.';
@@ -316,7 +342,7 @@ function frame() {
     if (t >= TOTAL) finish(now);
   }
 
-  stage.draw({
+  if (draw) stage.draw({
     now,
     t,
     total: TOTAL,
@@ -337,7 +363,7 @@ function finish(now) {
   $('bol').textContent = 'Chalo';
   $('bol').classList.add('khali');
   $('coach').textContent = 'The light is green.';
-  setTimeout(() => {
+  if (!VIDEO) setTimeout(() => {
     const kolam = Math.round(((st.revealed + Math.min(1, st.progress)) / stage.groupCount) * 100);
     const sync = st.notes ? Math.round((st.inTime / st.notes) * 100) : 0;
     $('oSync').textContent = `${sync}%`;
@@ -389,9 +415,21 @@ function toast(msg) {
 
 window.addEventListener('resize', () => stage.resize());
 stage.resize();
-requestAnimationFrame(frame);
+if (!VIDEO) requestAnimationFrame(frame);
 
 // small hook for automated checks and screenshots
+window.__advanceTo = (t, draw = true) => {
+  const step = 1 / 30;
+  while (window.__vt < t - 1e-6) {
+    window.__vt = Math.min(t, window.__vt + step);
+    render(window.__vt, draw && window.__vt >= t - 1e-6);
+  }
+  if (draw) render(window.__vt, true);
+};
+window.__videoStart = async () => {
+  document.querySelector('input[name=mode][value=crowd]').checked = true;
+  await begin();
+};
 window.__rlr = { st, stage, begin, onEvent, get audio() { return audio; } };
 
 if (params.get('auto') === '1') {
